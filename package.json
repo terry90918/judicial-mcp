@@ -18,7 +18,10 @@
     "url": "git+https://github.com/terry90918/judicial-mcp.git"
   },
   "license": "MIT",
-  "author": "Terry Chen",
+  "author": {
+    "name": "Terry Chen",
+    "email": "zxtw17985321@gmail.com"
+  },
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
