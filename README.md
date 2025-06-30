@@ -126,6 +126,18 @@ judicial-mcp/
 - [司法院裁判書查詢 API](https://data.judicial.gov.tw/jdg/)
 - [司法院開放資料平台](https://opendata.judicial.gov.tw/)
 
+## 貢獻指南
+
+我們歡迎社群的貢獻！在參與此專案前，請先閱讀我們的 [行為準則](CODE_OF_CONDUCT.md)。
+
+### 如何貢獻
+
+1. Fork 此專案
+2. 創建您的功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交您的變更 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 開啟一個 Pull Request
+
 ## 授權條款
 
 MIT License
@@ -137,3 +149,5 @@ Terry Chen
 ## 回報問題
 
 如有問題或建議，請至 [GitHub Issues](https://github.com/terry90918/judicial-mcp/issues) 回報。
+
+在回報問題或參與討論時，請遵守我們的 [行為準則](CODE_OF_CONDUCT.md)。
