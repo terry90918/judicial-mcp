@@ -25,7 +25,9 @@
     "start": "node start.js",
     "dev": "node start.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
   },
   "bin": {
     "judicial-mcp": "bin/judicial-mcp.js"
@@ -37,6 +39,7 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "oxlint": "^0.15.0",
     "supertest": "^6.3.4"
   },
   "jest": {
