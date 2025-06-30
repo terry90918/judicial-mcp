@@ -1,1 +1,1 @@
-# jurislm-mcp
+# judicial-mcp
