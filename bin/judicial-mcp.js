@@ -11,11 +11,12 @@
  */
 
 /**
- * 引入並執行伺服器啟動腳本
- * 直接載入 start.js 來啟動 Express 伺服器
+ * 引入並執行 MCP 伺服器
+ * 直接載入 src/index.js 來啟動 MCP 伺服器
  * 
  * 使用方式：
  * - 全域安裝後：judicial-mcp
  * - 或直接執行：node bin/judicial-mcp.js
+ * - MCP 客戶端連接：透過 stdio 傳輸協定
  */
-require('../start');
+require('../src/index.js');

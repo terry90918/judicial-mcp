@@ -4,13 +4,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a judicial-mcp (司法院 MCP) server - a Node.js/Express application that provides RESTful API endpoints for accessing Taiwan Judicial Yuan's open data and court judgments. The server acts as a bridge between clients and the official judicial APIs, handling authentication, data retrieval, and file downloads.
+This is a judicial-mcp (司法院 MCP) server - a Node.js application that provides MCP (Model Context Protocol) compliant tools for accessing Taiwan Judicial Yuan's open data and court judgments. The server implements the MCP specification to enable AI assistants and other clients to access judicial data through standardized protocol tools.
+
+### MCP Implementation
+
+The server follows the Model Context Protocol specification:
+- **Protocol Version**: Compatible with MCP SDK v0.5.0
+- **Transport**: stdio (standard input/output)
+- **Tools**: 6 judicial data access tools
+- **Authentication**: Environment variable based credentials
 
 ## Commands
 
 ### Development
-- `npm start` or `npm run dev` - Start the server (runs start.js, server listens on port 3000 by default)
-- `npm test` - Run Jest tests
+- `npm start` or `npm run dev` - Start the MCP server (runs src/index.js)
+- `npm test` - Run Jest tests (includes MCP functionality tests)
 - `npm run test:watch` - Run tests in watch mode
 - `npm run lint` - Run oxlint linter
 - `npm run lint:fix` - Run oxlint with auto-fix
@@ -18,43 +26,74 @@ This is a judicial-mcp (司法院 MCP) server - a Node.js/Express application th
 ### Installation & Setup
 - Copy `.env.example` to `.env` and configure JUDICIAL_USER and JUDICIAL_PASSWORD
 - Credentials are for Taiwan Judicial Yuan API access at https://data.judicial.gov.tw/jdg/
+- Install dependencies: `npm install` (includes @modelcontextprotocol/sdk)
+
+### MCP Client Configuration
+Add to your MCP client configuration (e.g., Claude Desktop):
+```json
+{
+  "mcpServers": {
+    "judicial-mcp": {
+      "command": "node",
+      "args": ["path/to/judicial-mcp/src/index.js"],
+      "env": {
+        "JUDICIAL_USER": "your_username",
+        "JUDICIAL_PASSWORD": "your_password"
+      }
+    }
+  }
+}
+```
 
 ## Architecture
 
 ### Core Structure
-- **server.js** - Main Express application with all API routes and middleware
-- **start.js** - Server startup script that imports and runs the Express app
+- **src/index.js** - Main MCP server with protocol handlers and transport setup
+- **src/tools.js** - MCP tool definitions and handlers
+- **server.js** - Legacy Express server (kept for compatibility)
+- **start.js** - Legacy server startup script
 - **bin/judicial-mcp.js** - CLI entry point for global npm installations
+- **mcp.json** - MCP server configuration manifest
 
-### API Endpoints Architecture
-The server exposes 6 main endpoints under `/mcp/` prefix:
+### MCP Tools Architecture
+The server provides 6 MCP tools for judicial data access:
 
-1. **Authentication**: `POST /mcp/auth_token` - Gets JWT token from Judicial Yuan
-2. **Judgment Listing**: `POST /mcp/list_judgments` - Retrieves judgment change lists
-3. **Judgment Content**: `POST /mcp/get_judgment` - Gets specific judgment content
-4. **Categories**: `GET /mcp/list_categories` - Lists all data categories
-5. **Resources**: `GET /mcp/list_resources/:categoryNo` - Gets resources by category
-6. **File Download**: `GET /mcp/download_file/:fileSetId` - Downloads data files with pagination
+1. **auth_token** - Gets JWT token from Judicial Yuan API
+2. **list_judgments** - Retrieves judgment change lists
+3. **get_judgment** - Gets specific judgment content
+4. **list_categories** - Lists all data categories
+5. **list_resources** - Gets resources by category number
+6. **download_file** - Downloads data files with pagination support
+
+### MCP Protocol Implementation
+- **Transport**: StdioServerTransport for client-server communication
+- **Protocol**: JSON-RPC 2.0 based MCP specification
+- **Tools**: Each tool has input schema validation and structured output
+- **Error Handling**: Standardized MCP error responses with detailed logging
 
 ### External API Integration
 The server proxies requests to two main external APIs:
 - `https://data.judicial.gov.tw/jdg/api/` - Judgment database API (requires auth)
 - `https://opendata.judicial.gov.tw/` - Open data platform API (public access)
 
-### Error Handling
-Centralized error handling via `handleError()` function in server.js:217 that standardizes error responses and logs API errors with detailed information.
-
 ### Environment Configuration
 - Uses dotenv for environment variables
-- Supports default credentials from env vars in auth endpoint
-- PORT configuration with fallback to 3000
+- Supports default credentials from env vars in auth_token tool
+- MCP server configuration via mcp.json manifest
 
 ## Testing
 
-- Jest with Supertest for HTTP endpoint testing
+- Jest for MCP tool and configuration testing
 - Test environment configured in package.json
-- Current test coverage focuses on the public `/mcp/list_categories` endpoint
-- Tests verify HTTP status codes, response formats, and data structures
+- **__tests__/mcp.test.js** - MCP server functionality tests
+- **__tests__/server.test.js** - Legacy Express server tests (kept for compatibility)
+- Tests verify tool configuration, input schema validation, and handler functionality
+
+### Test Coverage
+- MCP tool configuration validation
+- Tool handler existence and functionality
+- Input schema compliance
+- Error handling scenarios
 
 ## Linting
 
