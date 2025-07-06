@@ -9,25 +9,26 @@
 
 ## 關於專案
 
-**judicial-mcp** 是一個專為法律研究人員、律師和司法資料分析師設計的工具，提供簡單易用的 RESTful API 介面來存取台灣司法院的官方資料。透過統一的 API 端點，使用者可以輕鬆取得裁判書內容、開放資料和各種司法統計資訊。
+**judicial-mcp** 是一個專為法律研究人員、律師和司法資料分析師設計的 MCP 伺服器，遵循 Model Context Protocol 規範，讓 AI 助手和其他客戶端能夠透過標準化協議存取台灣司法院的官方資料。透過 6 個專用的 MCP 工具，使用者可以輕鬆取得裁判書內容、開放資料和各種司法統計資訊。
 
 ## 功能特色
 
-- 🏛️ **司法院裁判書 API** - 取得裁判書授權、清單和內容
-- 📊 **開放資料 API** - 存取司法院開放資料平台
-- 🔍 **分類資料** - 瀏覽主題分類和資料源
-- 📥 **檔案下載** - 下載司法資料檔案
+- 🏛️ **司法院裁判書工具** - 取得裁判書授權、清單和內容
+- 📊 **開放資料工具** - 存取司法院開放資料平台
+- 🔍 **分類資料工具** - 瀏覽主題分類和資料源
+- 📥 **檔案下載工具** - 下載司法資料檔案，支援分頁
 - 🧪 **完整測試** - Jest 測試覆蓋
-- 🔒 **安全認證** - 支援 Token 基礎認證
-- 📖 **完整文檔** - 詳細的 API 文檔和使用範例
-- ⚡ **高效能** - 基於 Express.js 框架，支援非同步處理
+- 🔒 **安全認證** - 支援環境變數和 Token 基礎認證
+- 📖 **完整文檔** - 詳細的 MCP 工具文檔和使用範例
+- ⚡ **MCP 協議** - 遵循 Model Context Protocol 規範，支援 stdio 傳輸
 
 ## 技術架構
 
-- **框架**: Express.js 4.18+
+- **MCP SDK**: @modelcontextprotocol/sdk ^0.5.0
 - **HTTP 客戶端**: Axios 1.6+
 - **測試框架**: Jest 29.7+
 - **Node.js**: 14.0+ 版本支援
+- **傳輸協議**: stdio (標準輸入/輸出)
 - **授權**: MIT License
 
 ## 安裝
@@ -38,62 +39,65 @@ npm install judicial-mcp
 
 ## 使用方式
 
-### 啟動伺服器
+### 環境設定
+
+1. 複製環境變數範例檔案：
+```bash
+cp .env.example .env
+```
+
+2. 編輯 `.env` 檔案，設定司法院 API 憑證：
+```
+JUDICIAL_USER=your_username
+JUDICIAL_PASSWORD=your_password
+```
+
+### MCP 客戶端配置
+
+將以下配置加入您的 MCP 客戶端設定檔（例如 Claude Desktop）：
+
+```json
+{
+  "mcpServers": {
+    "judicial-mcp": {
+      "command": "node",
+      "args": ["path/to/judicial-mcp/src/index.js"],
+      "env": {
+        "JUDICIAL_USER": "your_username",
+        "JUDICIAL_PASSWORD": "your_password"
+      }
+    }
+  }
+}
+```
+
+### 直接執行 MCP 伺服器
 
 ```bash
 npm start
 ```
 
-伺服器將在 `http://localhost:3000` 啟動
+### 可用的 MCP 工具
 
-### API 端點
+#### 1. `auth_token` - 取得授權 Token
+- 支援使用環境變數中的預設帳密
+- 可選參數：`user`, `password`
 
-#### 1. 裁判書授權取得 Token
-```
-POST /mcp/auth_token
-Content-Type: application/json
+#### 2. `list_judgments` - 取得裁判書異動清單
+- 必要參數：`token`（從 auth_token 取得）
 
-{
-  "user": "your_username",
-  "password": "your_password"
-}
-```
+#### 3. `get_judgment` - 取得裁判書內容
+- 必要參數：`token`, `jid`
 
-#### 2. 取得裁判書異動清單
-```
-POST /mcp/list_judgments
-Content-Type: application/json
+#### 4. `list_categories` - 取得主題分類清單
+- 無需參數
 
-{
-  "token": "your_auth_token"
-}
-```
+#### 5. `list_resources` - 取得分類資料源
+- 必要參數：`categoryNo`
 
-#### 3. 取得裁判書內容
-```
-POST /mcp/get_judgment
-Content-Type: application/json
-
-{
-  "token": "your_auth_token",
-  "jid": "judgment_id"
-}
-```
-
-#### 4. 取得主題分類清單
-```
-GET /mcp/list_categories
-```
-
-#### 5. 取得分類資料源
-```
-GET /mcp/list_resources/:categoryNo
-```
-
-#### 6. 下載資料檔案
-```
-GET /mcp/download_file/:fileSetId?top=100&skip=0
-```
+#### 6. `download_file` - 下載資料檔案
+- 必要參數：`fileSetId`
+- 可選參數：`top`, `skip`（分頁支援）
 
 ## 開發
 
@@ -109,14 +113,22 @@ npm test
 judicial-mcp/
 ├── bin/
 │   └── judicial-mcp.js    # CLI 入口點
+├── src/
+│   ├── index.js           # 主要 MCP 伺服器
+│   └── tools.js           # MCP 工具定義和處理器
 ├── __tests__/
-│   └── server.test.js     # 測試檔案
-├── server.js              # 主要 Express 伺服器
-├── start.js               # 伺服器啟動腳本
+│   ├── mcp.test.js        # MCP 功能測試
+│   └── server.test.js     # 舊版相容性測試
+├── examples/
+│   └── mcp-client-example.js  # MCP 客戶端範例
+├── mcp.json               # MCP 伺服器配置
+├── server.js              # 舊版 Express 伺服器（相容性）
+├── start.js               # 舊版伺服器啟動腳本
 ├── package.json           # 專案配置
 ├── .env.example           # 環境變數範例
-├── .gitignore            # Git 忽略檔案
-└── README.md             # 專案文檔
+├── CLAUDE.md              # Claude Code 專用指南
+├── CHANGELOG.md           # 版本變更記錄
+└── README.md              # 專案文檔
 ```
 
 ## 資料來源
