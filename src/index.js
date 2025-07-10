@@ -4,7 +4,7 @@
  * @file src/index.js
  * @description 司法院 MCP 伺服器 - 遵循 Model Context Protocol 規範
  * @author Terry Chen
- * @version 1.0.0
+ * @version 1.1.1
  * @license MIT
  */
 
@@ -28,7 +28,7 @@ const { TOOLS_CONFIG, TOOL_HANDLERS } = require('./tools.js');
 const server = new Server(
   {
     name: 'judicial-mcp',
-    version: '1.0.0',
+    version: '1.1.1',
   },
   {
     capabilities: {

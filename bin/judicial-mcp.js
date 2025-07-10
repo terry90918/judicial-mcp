@@ -5,7 +5,7 @@
  * @description 司法院 MCP 伺服器的命令列介面 (CLI) 入口點
  * 此檔案作為全域安裝時的可執行檔案，直接啟動伺服器
  * @author Terry Chen
- * @version 1.0.0
+ * @version 1.1.1
  * @license MIT
  * @since 1.0.0
  */
