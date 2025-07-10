@@ -122,6 +122,25 @@ const TOOLS_CONFIG = {
       required: ['fileSetId'],
       additionalProperties: false
     }
+  },
+
+  member_token: {
+    name: 'member_token',
+    description: '取得司法院開放平台的會員授權 Token，用於存取會員專屬資源。',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        user: {
+          type: 'string',
+          description: '使用者帳號（可選，未提供時使用環境變數 JUDICIAL_USER）'
+        },
+        password: {
+          type: 'string',
+          description: '使用者密碼（可選，未提供時使用環境變數 JUDICIAL_PASSWORD）'
+        }
+      },
+      additionalProperties: false
+    }
   }
 };
 
@@ -204,6 +223,25 @@ const TOOL_HANDLERS = {
         contentType: result.headers['content-type'],
         base64: Buffer.from(result.data).toString('base64')
       }
+    };
+  },
+
+  async member_token(args) {
+    const user = args.user || process.env.JUDICIAL_USER;
+    const password = args.password || process.env.JUDICIAL_PASSWORD;
+
+    if (!user || !password) {
+      throw new Error('未提供使用者帳號或密碼，且環境變數 JUDICIAL_USER 或 JUDICIAL_PASSWORD 未設定');
+    }
+
+    const result = await axios.post(`${OPENDATA_API_BASE}/api/MemberTokens`, { 
+      user, 
+      password 
+    });
+    return {
+      success: true,
+      message: '開放平台會員授權成功',
+      data: result.data
     };
   }
 };

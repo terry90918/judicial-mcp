@@ -8,7 +8,11 @@
       "Bash(npm run lint)",
       "Bash(ls:*)",
       "Bash(gtimeout:*)",
-      "Bash(claude mcp add:*)"
+      "Bash(claude mcp add:*)",
+      "Bash(node:*)",
+      "Bash(npm test:*)",
+      "Bash(rm:*)",
+      "mcp__judicial-mcp__list_categories"
     ],
     "deny": []
   }

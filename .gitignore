@@ -69,3 +69,6 @@ temp/
 # 套件鎖定檔案
 package-lock.json
 yarn.lock
+
+# Claude MCP
+mcp.json

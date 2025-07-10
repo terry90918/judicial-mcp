@@ -48,6 +48,7 @@ cp .env.example .env
 
 2. 編輯 `.env` 檔案，設定司法院 API 憑證：
 ```
+PORT=your_port_number
 JUDICIAL_USER=your_username
 JUDICIAL_PASSWORD=your_password
 ```
