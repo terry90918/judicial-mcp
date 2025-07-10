@@ -12,7 +12,8 @@
       "Bash(node:*)",
       "Bash(npm test:*)",
       "Bash(rm:*)",
-      "mcp__judicial-mcp__list_categories"
+      "mcp__judicial-mcp__list_categories",
+      "Bash(npm publish:*)"
     ],
     "deny": []
   }

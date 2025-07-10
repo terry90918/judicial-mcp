@@ -57,6 +57,26 @@ JUDICIAL_PASSWORD=your_password
 
 將以下配置加入您的 MCP 客戶端設定檔（例如 Claude Desktop）：
 
+#### 方式 1：使用 npx（推薦）
+```json
+{
+  "mcpServers": {
+    "judicial-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "judicial-mcp@latest"
+      ],
+      "env": {
+        "JUDICIAL_USER": "your_username",
+        "JUDICIAL_PASSWORD": "your_password"
+      }
+    }
+  }
+}
+```
+
+#### 方式 2：使用本地路徑
 ```json
 {
   "mcpServers": {
