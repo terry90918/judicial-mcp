@@ -8,7 +8,14 @@
  * @license MIT
  */
 
-require('dotenv').config();
+// Suppress all dotenv console output
+const originalConsole = { ...console };
+console.log = console.info = console.warn = () => {};
+try {
+  require('dotenv').config();
+} finally {
+  Object.assign(console, originalConsole);
+}
 const { Server } = require('@modelcontextprotocol/sdk/server/index.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
 const { CallToolRequestSchema, ListToolsRequestSchema } = require('@modelcontextprotocol/sdk/types.js');
@@ -38,7 +45,6 @@ const server = new Server(
  */
 const handleError = (error, message) => {
   const errorDetail = error.response?.data || error.message;
-  console.error(`MCP Tool Error: ${message}`, errorDetail);
   return {
     content: [
       {
@@ -93,7 +99,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error('司法院 MCP 伺服器已啟動');
 }
 
 main().catch((error) => {
