@@ -11,7 +11,7 @@ This is a judicial-mcp (司法院 MCP) server - a Node.js application that provi
 The server follows the Model Context Protocol specification:
 - **Protocol Version**: Compatible with MCP SDK v0.5.0
 - **Transport**: stdio (standard input/output)
-- **Tools**: 6 judicial data access tools
+- **Tools**: 7 judicial data access tools
 - **Authentication**: Environment variable based credentials
 
 ## Commands
@@ -56,7 +56,7 @@ Add to your MCP client configuration (e.g., Claude Desktop):
 - **mcp.json** - MCP server configuration manifest
 
 ### MCP Tools Architecture
-The server provides 6 MCP tools for judicial data access:
+The server provides 7 MCP tools for judicial data access:
 
 1. **auth_token** - Gets JWT token from Judicial Yuan API
 2. **list_judgments** - Retrieves judgment change lists
@@ -64,6 +64,7 @@ The server provides 6 MCP tools for judicial data access:
 4. **list_categories** - Lists all data categories
 5. **list_resources** - Gets resources by category number
 6. **download_file** - Downloads data files with pagination support
+7. **member_token** - Gets member authorization token for exclusive resources
 
 ### MCP Protocol Implementation
 - **Transport**: StdioServerTransport for client-server communication
