@@ -70,5 +70,6 @@ temp/
 package-lock.json
 yarn.lock
 
-# Claude MCP
+# Claude
 mcp.json
+.mcp.json
