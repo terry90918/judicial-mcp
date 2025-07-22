@@ -5,7 +5,6 @@
  * @description 司法院 MCP 伺服器 - 遵循 Model Context Protocol 規範
  * @author Terry Chen
  * @version 1.1.1
- * @license MIT
  */
 
 // Suppress all dotenv console output
