@@ -128,6 +128,12 @@ npm start
 npm test
 ```
 
+### 執行測試覆蓋率
+
+```bash
+npm run test:coverage
+```
+
 ### 專案結構
 
 ```
@@ -137,6 +143,8 @@ judicial-mcp/
 ├── src/
 │   ├── index.js           # 主要 MCP 伺服器
 │   └── tools.js           # MCP 工具定義和處理器
+├── types/
+│   └── index.d.ts         # TypeScript 類型定義
 ├── __tests__/
 │   ├── mcp.test.js        # MCP 功能測試
 │   └── server.test.js     # 舊版相容性測試
