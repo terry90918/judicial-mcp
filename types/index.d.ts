@@ -1,8 +1,6 @@
 /**
  * @file types/index.d.ts
  * @description TypeScript 類型定義檔案
- * @author Terry Chen
- * @version 1.1.1
  */
 
 declare module 'judicial-mcp' {

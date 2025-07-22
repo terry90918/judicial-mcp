@@ -2,10 +2,6 @@
  * @file start.js
  * @description 司法院 MCP 伺服器的啟動腳本
  * 此檔案負責啟動 Express 伺服器並開始監聽指定的連接埠
- * @author Terry Chen
- * @version 1.0.0
- * @license MIT
- * @since 1.0.0
  */
 
 /**

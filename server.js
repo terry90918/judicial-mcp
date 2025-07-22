@@ -1,9 +1,6 @@
 /**
  * @file server.js
  * @description 司法院 MCP 伺服器主要檔案，提供存取台灣司法院開放資料和裁判書的 API 服務
- * @author Terry Chen
- * @version 1.0.0
- * @license MIT
  */
 
 require('dotenv').config();

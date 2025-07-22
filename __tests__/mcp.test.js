@@ -1,8 +1,6 @@
 /**
  * @file __tests__/mcp.test.js
  * @description MCP 伺服器功能測試
- * @author Terry Chen
- * @version 1.0.0
  */
 
 const { TOOLS_CONFIG, TOOL_HANDLERS } = require('../src/tools');

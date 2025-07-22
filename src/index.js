@@ -3,11 +3,8 @@
 /**
  * @file src/index.js
  * @description 司法院 MCP 伺服器 - 遵循 Model Context Protocol 規範
- * @author Terry Chen
- * @version 1.1.1
  */
 
-// Suppress all dotenv console output
 const originalConsole = { ...console };
 console.log = console.info = console.warn = () => {};
 try {
@@ -27,7 +24,7 @@ const { TOOLS_CONFIG, TOOL_HANDLERS } = require('./tools.js');
 const server = new Server(
   {
     name: 'judicial-mcp',
-    version: '1.1.1',
+    version: '1.2.0',
   },
   {
     capabilities: {

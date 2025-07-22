@@ -2,10 +2,6 @@
  * @file server.test.js
  * @description 司法院 MCP 伺服器的單元測試檔案
  * 使用 Jest 和 Supertest 進行 API 端點測試，確保伺服器功能正常運作
- * @author Terry Chen
- * @version 1.0.0
- * @license MIT
- * @since 1.0.0
  */
 
 /**

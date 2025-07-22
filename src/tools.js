@@ -1,8 +1,6 @@
 /**
  * @file src/tools.js
  * @description MCP 工具定義和配置
- * @author Terry Chen
- * @version 1.1.1
  */
 
 const axios = require('axios');

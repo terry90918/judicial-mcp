@@ -3,8 +3,6 @@
 /**
  * @file examples/mcp-client-example.js
  * @description MCP 客戶端範例，展示如何與司法院 MCP 伺服器互動
- * @author Terry Chen
- * @version 1.0.0
  */
 
 const { spawn } = require('child_process');
