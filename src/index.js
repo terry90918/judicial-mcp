@@ -45,6 +45,8 @@ const server = new Server(
  */
 const handleError = (error, message) => {
   const errorDetail = error.response?.data || error.message;
+  console.error(`${message}:`, errorDetail);
+  
   return {
     content: [
       {

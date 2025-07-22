@@ -24,13 +24,16 @@
   },
   "type": "commonjs",
   "main": "src/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "start": "node src/index.js",
     "dev": "node src/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "oxlint",
-    "lint:fix": "oxlint --fix"
+    "lint:fix": "oxlint --fix",
+    "prepublishOnly": "npm test && npm run lint"
   },
   "bin": {
     "judicial-mcp": "bin/judicial-mcp.js"

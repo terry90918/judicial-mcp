@@ -37,7 +37,7 @@ class SimpleMCPClient {
         try {
           const parsed = JSON.parse(message);
           this.handleServerMessage(parsed);
-        } catch (e) {
+        } catch {
           console.log('📝 伺服器訊息:', message);
         }
       });
