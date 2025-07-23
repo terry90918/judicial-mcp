@@ -33,11 +33,7 @@
     "test:coverage": "jest --coverage",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "prepublishOnly": "npm test && npm run lint",
-    "version": "node scripts/update-version.js && git add .",
-    "release:patch": "npm version patch && npm publish && git push && git push --tags",
-    "release:minor": "npm version minor && npm publish && git push && git push --tags",
-    "release:major": "npm version major && npm publish && git push && git push --tags"
+    "prepublishOnly": "npm test && npm run lint"
   },
   "bin": {
     "judicial-mcp": "bin/judicial-mcp.js"
