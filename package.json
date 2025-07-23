@@ -1,6 +1,6 @@
 {
   "name": "judicial-mcp",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "MCP server for accessing Taiwan Judicial Yuan open data and judgments.",
   "keywords": [
     "mcp",
@@ -45,7 +45,7 @@
   "mcp": {
     "name": "judicial-mcp",
     "description": "MCP server for accessing Taiwan Judicial Yuan open data and judgments",
-    "version": "1.2.1"
+    "version": "1.2.2"
   },
   "dependencies": {
     "axios": "^1.6.0",
