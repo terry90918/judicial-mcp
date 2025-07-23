@@ -33,6 +33,14 @@ describe('MCP 伺服器測試', () => {
       
       expect(toolNames.sort()).toEqual(handlerNames.sort());
     });
+
+    test('所有工具都禁止額外屬性', () => {
+      const tools = Object.values(TOOLS_CONFIG);
+      
+      tools.forEach(tool => {
+        expect(tool.inputSchema.additionalProperties).toBe(false);
+      });
+    });
   });
 
   describe('工具處理器', () => {
@@ -97,6 +105,34 @@ describe('MCP 伺服器測試', () => {
       expect(tool.inputSchema.required).toContain('fileSetId');
       expect(tool.inputSchema.properties.top.pattern).toBe('^[0-9]+$');
       expect(tool.inputSchema.properties.skip.pattern).toBe('^[0-9]+$');
+    });
+
+    test('list_categories 工具配置正確', () => {
+      const tool = TOOLS_CONFIG.list_categories;
+      
+      expect(tool.name).toBe('list_categories');
+      expect(tool.inputSchema.properties).toEqual({});
+      expect(tool.inputSchema.required).toBeUndefined();
+      expect(tool.inputSchema.additionalProperties).toBe(false);
+    });
+
+    test('list_resources 工具配置正確', () => {
+      const tool = TOOLS_CONFIG.list_resources;
+      
+      expect(tool.name).toBe('list_resources');
+      expect(tool.inputSchema.properties).toHaveProperty('categoryNo');
+      expect(tool.inputSchema.required).toContain('categoryNo');
+      expect(tool.inputSchema.additionalProperties).toBe(false);
+    });
+
+    test('member_token 工具配置正確', () => {
+      const tool = TOOLS_CONFIG.member_token;
+      
+      expect(tool.name).toBe('member_token');
+      expect(tool.inputSchema.properties).toHaveProperty('user');
+      expect(tool.inputSchema.properties).toHaveProperty('password');
+      expect(tool.inputSchema.required).toBeUndefined(); // 因為有預設值
+      expect(tool.inputSchema.additionalProperties).toBe(false);
     });
   });
 });

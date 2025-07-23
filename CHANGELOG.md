@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.1] - 2025-07-23
+### 改進
+- 達成 100% 測試覆蓋率 (46 tests, 278 lines covered)
+- 移除未使用的 Express 伺服器相關檔案和依賴
+- 修正所有 oxlint 警告，提升程式碼品質
+- 增強 MCP 配置測試，包含所有 7 個工具的完整驗證
+- 新增工具架構安全性驗證 (`additionalProperties: false`)
+
+### 移除
+- 刪除 `server.js`, `start.js` 及相關測試檔案
+- 清理 62 個未使用的 npm 套件依賴
+- 移除 Express.js 和 HTTP API 相關程式碼
+
+---
+
 ## [1.2.0] - 2025-07-22
 ### 新增
 - TypeScript 類型定義檔案 (`types/index.d.ts`)
