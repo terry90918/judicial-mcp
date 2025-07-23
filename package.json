@@ -3,11 +3,11 @@
   "version": "1.2.1",
   "description": "MCP server for accessing Taiwan Judicial Yuan open data and judgments.",
   "keywords": [
-    "MCP",
+    "mcp",
     "judicial",
     "open-data",
     "court",
-    "Taiwan"
+    "taiwan"
   ],
   "homepage": "https://github.com/terry90918/judicial-mcp#readme",
   "bugs": {
