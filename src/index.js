@@ -24,7 +24,7 @@ const { TOOLS_CONFIG, TOOL_HANDLERS } = require('./tools.js');
 const server = new Server(
   {
     name: 'judicial-mcp',
-    version: '1.2.5',
+    version: '1.2.6',
   },
   {
     capabilities: {
