@@ -155,7 +155,7 @@ describe('Tools 模組測試', () => {
       const mockResponse = { data: [{ id: '1', name: 'Category 1' }] };
       mockedAxios.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await TOOL_HANDLERS.list_categories();
+      const result = await TOOL_HANDLERS.list_categories({ token: 'test-token' });
       
       expect(result.success).toBe(true);
       expect(result.message).toBe('取得主題分類清單成功');
@@ -167,7 +167,7 @@ describe('Tools 模組測試', () => {
       };
       mockedAxios.get.mockRejectedValueOnce(mockError);
 
-      await expect(TOOL_HANDLERS.list_categories())
+      await expect(TOOL_HANDLERS.list_categories({ token: 'test-token' }))
         .rejects.toThrow('取得主題分類清單失敗: Service unavailable');
     });
 
@@ -175,7 +175,7 @@ describe('Tools 模組測試', () => {
       const mockError = new Error('Network Error');
       mockedAxios.get.mockRejectedValueOnce(mockError);
 
-      await expect(TOOL_HANDLERS.list_categories())
+      await expect(TOOL_HANDLERS.list_categories({ token: 'test-token' }))
         .rejects.toThrow('取得主題分類清單失敗: Network Error');
     });
   });
@@ -185,7 +185,7 @@ describe('Tools 模組測試', () => {
       const mockResponse = { data: [{ id: '1', name: 'Resource 1' }] };
       mockedAxios.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await TOOL_HANDLERS.list_resources({ categoryNo: 'CAT001' });
+      const result = await TOOL_HANDLERS.list_resources({ categoryNo: 'CAT001', token: 'test-token' });
       
       expect(result.success).toBe(true);
       expect(result.message).toBe('取得分類 CAT001 的資料源清單成功');
@@ -193,7 +193,7 @@ describe('Tools 模組測試', () => {
 
     test('缺少必要參數時拋出錯誤', async () => {
       await expect(TOOL_HANDLERS.list_resources({}))
-        .rejects.toThrow('缺少必要參數: categoryNo');
+        .rejects.toThrow('缺少必要參數: categoryNo, token');
     });
 
     test('API 請求失敗時拋出錯誤', async () => {
@@ -202,7 +202,7 @@ describe('Tools 模組測試', () => {
       };
       mockedAxios.get.mockRejectedValueOnce(mockError);
 
-      await expect(TOOL_HANDLERS.list_resources({ categoryNo: 'INVALID' }))
+      await expect(TOOL_HANDLERS.list_resources({ categoryNo: 'INVALID', token: 'test-token' }))
         .rejects.toThrow('取得資料源清單失敗: Category not found');
     });
 
@@ -210,7 +210,7 @@ describe('Tools 模組測試', () => {
       const mockError = new Error('Network Error');
       mockedAxios.get.mockRejectedValueOnce(mockError);
 
-      await expect(TOOL_HANDLERS.list_resources({ categoryNo: 'CAT001' }))
+      await expect(TOOL_HANDLERS.list_resources({ categoryNo: 'CAT001', token: 'test-token' }))
         .rejects.toThrow('取得資料源清單失敗: Network Error');
     });
   });
@@ -223,7 +223,7 @@ describe('Tools 模組測試', () => {
       };
       mockedAxios.get.mockResolvedValueOnce(mockResponse);
 
-      const result = await TOOL_HANDLERS.download_file({ fileSetId: 'FILE001' });
+      const result = await TOOL_HANDLERS.download_file({ fileSetId: 'FILE001', token: 'test-token' });
       
       expect(result.success).toBe(true);
       expect(result.message).toBe('檔案下載成功');
@@ -235,7 +235,7 @@ describe('Tools 模組測試', () => {
       };
       mockedAxios.get.mockRejectedValueOnce(mockError);
 
-      await expect(TOOL_HANDLERS.download_file({ fileSetId: 'INVALID' }))
+      await expect(TOOL_HANDLERS.download_file({ fileSetId: 'INVALID', token: 'test-token' }))
         .rejects.toThrow('檔案下載失敗: File not found');
     });
 
@@ -243,13 +243,14 @@ describe('Tools 模組測試', () => {
       const mockError = new Error('Network Error');
       mockedAxios.get.mockRejectedValueOnce(mockError);
 
-      await expect(TOOL_HANDLERS.download_file({ fileSetId: 'FILE001' }))
+      await expect(TOOL_HANDLERS.download_file({ fileSetId: 'FILE001', token: 'test-token' }))
         .rejects.toThrow('檔案下載失敗: Network Error');
     });
 
     test('無效的 top 參數時拋出錯誤', async () => {
       await expect(TOOL_HANDLERS.download_file({ 
         fileSetId: 'FILE001',
+        token: 'test-token',
         top: 'invalid_number' 
       }))
         .rejects.toThrow('top 必須是數字字串');
@@ -258,6 +259,7 @@ describe('Tools 模組測試', () => {
     test('無效的 skip 參數時拋出錯誤', async () => {
       await expect(TOOL_HANDLERS.download_file({ 
         fileSetId: 'FILE001',
+        token: 'test-token',
         skip: 'invalid_number' 
       }))
         .rejects.toThrow('skip 必須是數字字串');
@@ -333,6 +335,7 @@ describe('Tools 模組測試', () => {
       // 這個測試實際上會驗證參數，但在當前版本中，參數驗證可能沒有實現
       const result = await TOOL_HANDLERS.download_file({ 
         fileSetId: 'FILE001',
+        token: 'test-token',
         top: '123', // 有效的數字字串
         skip: '456' // 有效的數字字串
       });

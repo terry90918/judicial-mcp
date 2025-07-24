@@ -102,7 +102,8 @@ describe('MCP 伺服器測試', () => {
       expect(tool.inputSchema.properties).toHaveProperty('fileSetId');
       expect(tool.inputSchema.properties).toHaveProperty('top');
       expect(tool.inputSchema.properties).toHaveProperty('skip');
-      expect(tool.inputSchema.required).toContain('fileSetId');
+      expect(tool.inputSchema.properties).toHaveProperty('token');
+      expect(tool.inputSchema.required).toEqual(['fileSetId', 'token']);
       expect(tool.inputSchema.properties.top.pattern).toBe('^[0-9]+$');
       expect(tool.inputSchema.properties.skip.pattern).toBe('^[0-9]+$');
     });
@@ -111,8 +112,13 @@ describe('MCP 伺服器測試', () => {
       const tool = TOOLS_CONFIG.list_categories;
       
       expect(tool.name).toBe('list_categories');
-      expect(tool.inputSchema.properties).toEqual({});
-      expect(tool.inputSchema.required).toBeUndefined();
+      expect(tool.inputSchema.properties).toEqual({
+        token: {
+          type: 'string',
+          description: '從 member_token 工具取得的會員授權 Token'
+        }
+      });
+      expect(tool.inputSchema.required).toEqual(['token']);
       expect(tool.inputSchema.additionalProperties).toBe(false);
     });
 
@@ -121,7 +127,8 @@ describe('MCP 伺服器測試', () => {
       
       expect(tool.name).toBe('list_resources');
       expect(tool.inputSchema.properties).toHaveProperty('categoryNo');
-      expect(tool.inputSchema.required).toContain('categoryNo');
+      expect(tool.inputSchema.properties).toHaveProperty('token');
+      expect(tool.inputSchema.required).toEqual(['categoryNo', 'token']);
       expect(tool.inputSchema.additionalProperties).toBe(false);
     });
 
