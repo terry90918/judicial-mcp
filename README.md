@@ -148,15 +148,13 @@ judicial-mcp/
 ├── __tests__/
 │   ├── mcp.test.js        # MCP 功能測試
 │   └── server.test.js     # 舊版相容性測試
-├── examples/
-│   └── mcp-client-example.js  # MCP 客戶端範例
-├── mcp.json               # MCP 伺服器配置
-├── server.js              # 舊版 Express 伺服器（相容性）
-├── start.js               # 舊版伺服器啟動腳本
 ├── package.json           # 專案配置
 ├── .env.example           # 環境變數範例
-├── CLAUDE.md              # Claude Code 專用指南
 ├── CHANGELOG.md           # 版本變更記錄
+├── CODE_OF_CONDUCT.md     # 行為準則
+├── LICENSE                # 授權條款
+├── MCP_TUTORIAL.md        # MCP 使用教學
+├── oxlintrc.json          # oxlint 配置
 └── README.md              # 專案文檔
 ```
 
