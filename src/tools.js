@@ -308,8 +308,8 @@ const TOOL_HANDLERS = {
 
     try {
       const result = await axios.post(`${OPENDATA_API_BASE}/api/MemberTokens`, { 
-        user, 
-        password 
+        memberAccount: user,
+        pwd: password
       });
       return {
         success: true,
