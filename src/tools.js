@@ -113,7 +113,13 @@ const TOOLS_CONFIG = {
     description: '取得司法院開放資料平台的所有主題分類清單。',
     inputSchema: {
       type: 'object',
-      properties: {},
+      properties: {
+        token: {
+          type: 'string',
+          description: '從 member_token 工具取得的會員授權 Token'
+        }
+      },
+      required: ['token'],
       additionalProperties: false
     }
   },
@@ -127,9 +133,13 @@ const TOOLS_CONFIG = {
         categoryNo: {
           type: 'string',
           description: '從 list_categories 工具取得的分類編號'
+        },
+        token: {
+          type: 'string',
+          description: '從 member_token 工具取得的會員授權 Token'
         }
       },
-      required: ['categoryNo'],
+      required: ['categoryNo', 'token'],
       additionalProperties: false
     }
   },
@@ -153,9 +163,13 @@ const TOOLS_CONFIG = {
           type: 'string',
           description: '跳過筆數，用於分頁（可選）',
           pattern: '^[0-9]+$'
+        },
+        token: {
+          type: 'string',
+          description: '從 member_token 工具取得的會員授權 Token'
         }
       },
-      required: ['fileSetId'],
+      required: ['fileSetId', 'token'],
       additionalProperties: false
     }
   },
@@ -239,9 +253,16 @@ const TOOL_HANDLERS = {
     }
   },
 
-  async list_categories() {
+  async list_categories(args) {
+    validateInput.required(args, ['token']);
+    validateInput.token(args.token);
+
     try {
-      const result = await axios.get(`${OPENDATA_API_BASE}/data/api/rest/categories`);
+      const result = await axios.get(`${OPENDATA_API_BASE}/data/api/rest/categories`, {
+        headers: {
+          'Authorization': `Bearer ${args.token}`
+        }
+      });
       return {
         success: true,
         message: '取得主題分類清單成功',
@@ -253,11 +274,16 @@ const TOOL_HANDLERS = {
   },
 
   async list_resources(args) {
-    validateInput.required(args, ['categoryNo']);
+    validateInput.required(args, ['categoryNo', 'token']);
+    validateInput.token(args.token);
 
     try {
       const url = `${OPENDATA_API_BASE}/data/api/rest/categories/${args.categoryNo}/resources`;
-      const result = await axios.get(url);
+      const result = await axios.get(url, {
+        headers: {
+          'Authorization': `Bearer ${args.token}`
+        }
+      });
       return {
         success: true,
         message: `取得分類 ${args.categoryNo} 的資料源清單成功`,
@@ -269,9 +295,10 @@ const TOOL_HANDLERS = {
   },
 
   async download_file(args) {
-    validateInput.required(args, ['fileSetId']);
+    validateInput.required(args, ['fileSetId', 'token']);
     validateInput.numericString(args.top, 'top');
     validateInput.numericString(args.skip, 'skip');
+    validateInput.token(args.token);
 
     try {
       const params = new URLSearchParams();
@@ -283,7 +310,12 @@ const TOOL_HANDLERS = {
         url += `?${params.toString()}`;
       }
       
-      const result = await axios.get(url, { responseType: 'arraybuffer' });
+      const result = await axios.get(url, {
+        responseType: 'arraybuffer',
+        headers: {
+          'Authorization': `Bearer ${args.token}`
+        }
+      });
       return {
         success: true,
         message: '檔案下載成功',
